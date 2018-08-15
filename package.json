@@ -1,6 +1,6 @@
 {
   "name": "hexo-theme-tranquilpeak",
-  "version": "3.0.1",
+  "version": "3.0.0",
   "description": "A gorgeous responsive theme for Hexo blog framework",
   "main": "Gruntfile.js",
   "scripts": {
@@ -54,6 +54,7 @@
     "hexo-util": "0.6.3",
     "jquery": "3.3.1",
     "jsdom": "11.6.2",
+    "live2d": "0.0.0",
     "strip-indent": "2.0.0"
   },
   "engines": {

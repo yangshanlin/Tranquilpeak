@@ -12,7 +12,8 @@
 <div id="about">
     <div id="about-card">
         <div id="about-btn-close">
-            <i class="fa fa-times"></i>
+            <i class="fas fa-times">
+            </i>
         </div>
         <% if (authorPicture) { %>
             <img id="about-card-picture" src="<%= authorPicture %>" alt="<%= __('global.author_picture') %>"/>
@@ -30,7 +31,7 @@
         <% } %>
         <% if (theme.author.location) { %>
             <div id="about-card-location">
-                <i class="fa fa-map-marker-alt"></i>
+                <i class="fa fa-map-marker"></i>
                 <br/>
                 <%= theme.author.location %>
             </div>

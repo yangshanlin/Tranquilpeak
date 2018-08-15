@@ -100,6 +100,7 @@
       if (!this.$sidebar.hasClass('pushed') && !this.$sidebar.hasClass('processing')) {
         // Swipe the sidebar to the right
         this.$sidebar.addClass('processing pushed');
+        // TODO 2018/07/27 这一句是多的
         // add overflow on body to remove horizontal scroll
         this.$body.css('overflow-x', 'hidden');
         setTimeout(function() {

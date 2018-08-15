@@ -1,0 +1,62 @@
+.my_post_copyright {
+  width: 85%;
+  max-width: 45em;
+  margin: 2em auto 0;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  padding: 0.5em 1.0em;
+  border: 1px solid #d3d3d3;
+  font-size: 1.7rem;
+  line-height: 1.6em;
+  word-break: break-all;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.my_post_copyright p {
+  margin: 0;
+}
+
+.my_post_copyright span {
+  display: inline-block;
+  width: 5.2em;
+  color: #b5b5b5;
+  //color: #5d686f;
+  font-weight: bold;
+}
+
+.my_post_copyright .raw {
+  margin-left: 1em;
+  width: 5em;
+}
+
+.my_post_copyright a {
+  color: #808080;
+  border-bottom: 0;
+}
+
+.my_post_copyright a:hover {
+  //color: #a3d2a3;
+  color: #349ef3;
+  text-decoration: underline;
+}
+
+.my_post_copyright:hover .fa-clipboard {
+  color: #000;
+}
+
+.my_post_copyright .post-url:hover {
+  font-weight: normal;
+}
+
+.my_post_copyright .copy-path {
+  margin-left: 1em;
+  width: 1em;
++ mobile() {
+  display: none;
+}
+}
+
+.my_post_copyright .copy-path:hover {
+  color: #808080;
+  cursor: pointer;
+}

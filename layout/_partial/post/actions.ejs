@@ -44,13 +44,13 @@
             <% if (theme.gitment.enable) { %>
                 <li class="post-action">
                     <a class="post-action-btn btn btn--default" href="#gitment">
-                         <i class="fa fa-comment"></i>
+                         <i class="far fa-comment"></i>
                     </a>
                 </li>
             <% } else if (theme.disqus_shortname) { %>
                 <li class="post-action">
                     <a class="post-action-btn btn btn--default" href="#disqus_thread">
-                        <i class="fa fa-comment"></i>
+                        <i class="far fa-comment"></i>
                     </a>
                 </li>
             <% } %>
@@ -65,5 +65,30 @@
             </a>
         </li>
     </ul>
+</div>
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏">打脸赞赏戳这里OwO</a>
+        <br>
+    </div>
+    <div id="donate_guide" class="donate_bar center hidden" >
+        <!-- 支付宝打赏图案 -->
+        <img src="<%= relative_url(theme.image_dir , theme.donate.alipay) %>" alt="支付宝打赏">
+        <!-- 微信打赏图案 -->
+        <img src="<%= relative_url(theme.image_dir , theme.donate.wechatpay) %>" alt="微信打赏">
+    </div>
+    <script type="text/javascript">
+        let btnDonate = document.getElementById('btn_donate');
+        btnDonate.onclick = function(){
+            var qr=document.getElementById("donate_guide");
+            if ("none"===qr.style.display) {
+                qr.style.display="block"
+                btnDonate.innerText = "我再想想->.->"
+            } else {
+                qr.style.display="none"
+                btnDonate.innerText = "打脸赞赏戳这里OwO"
+            }
+        }
+    </script>
 </div>
 

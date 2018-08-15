@@ -34,6 +34,7 @@
         </div>
     </div>
     <div id="post-footer" class="post-footer main-content-wrap">
+        <%- partial('post/copyright') %>
         <% if ((post.tags) && (post.tags.length > 0)) { %>
             <div class="post-footer-tags">
                 <span class="text-color-light text-small"><%= __('post.tagged_in') %></span><br/>

@@ -6,3 +6,11 @@
     height:     auto;
     padding:    20px 20px;
 }
+
+#footer-img {
+    background: url(../images/footer-img.jpg) center no-repeat;
+    z-index: 1;
+    max-width: 100%;
+    padding-top: 36.8%;
+    background-size: cover;
+}

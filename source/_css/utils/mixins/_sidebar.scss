@@ -2,8 +2,10 @@
 @mixin sidebar-md {
     width: map-get($sidebar, md-screen-width);
 
-    // Author information
+    // Author information 最窄的情况
     .sidebar-profile {
+
+
         .sidebar-profile-picture {
             width:          30px;
             height:         30px;
@@ -12,6 +14,9 @@
             border-radius:  30px;
         }
         .sidebar-profile-name {
+            display: none;
+        }
+        .sidebar-profile-motto {
             display: none;
         }
     }
@@ -52,7 +57,7 @@
 
     // Author information
     .sidebar-profile {
-        height:         130px;
+        height:         175px;
         padding-top:    40px;
         padding-bottom: 7.5px;
 
@@ -60,14 +65,29 @@
             width:         90px;
             height:        90px;
             border-radius: 90px;
-            margin-bottom: 5px;
+            margin-bottom: 20px;
         }
         .sidebar-profile-name {
-            font-size: 1.6rem;
+            font-size: 3.6rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-profile-motto {
+            font-size: 2.6rem;
+            font-weight: 480;
+            color: #DDD;
         }
     }
     // Buttons
     ul.sidebar-buttons {
+        float: left;
+        background-color: rgba(0,0,0,.3);
+        margin: 6px;
+        padding-right: 15px;
+        border-radius: 5px;
+
         li.sidebar-button {
             text-align: left;
 
@@ -132,7 +152,7 @@
             width:         90px;
             height:        90px;
             border-radius: 90px;
-            margin-bottom: 5px;
+            margin-bottom: 20px;
         }
         .sidebar-profile-bio,
         .sidebar-profile-job,
@@ -147,16 +167,36 @@
             width:      49%;
             display:    inline-block;
         }
+
+        .sidebar-profile-name {
+            font-size: 3.6rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-profile-motto {
+            font-size: 2.6rem;
+            font-weight: 480;
+            color: #DDD;
+        }
     }
     // Buttons
     ul.sidebar-buttons {
-        width:          49%;
+        float: left;
+        width:          40%;
         vertical-align: top;
-        display:        inline-block;
+        background-color: rgba(0,0,0,.3);
+        margin: 6px;
+        padding-right: 15px;
+        border-radius: 5px;
 
         li.sidebar-button {
             text-align: left;
             box-sizing: border-box;
+            background-color: rgba(0,0,0,.3);
+            margin: 6px;
+
             .sidebar-button-link {
                 text-align:  left;
                 width:       auto;

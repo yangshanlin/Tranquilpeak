@@ -38,6 +38,47 @@
     var theme = hexo.theme.config;
 
     /**
+     * 取得图片，缩略图如果访问的是本地的文件的话，网站前缀默认会使用theme下config文件中配置的网站url
+     * 从而导致显示图片异常；此处改为了使用
+     * Generate thumbnail image url based on thumbnail image, cover image or photos
+     * @param {Object} post
+     * @returns {String|null}
+     */
+    function getThumbnailImageUrl(post) {
+        var rPhoto = /([\w:\-\/._#]+) *(["|'](.+)["|'])*/;
+
+        // use thumbnail image
+        if (theme.thumbnail_image && post.thumbnailImage && post.thumbnailImage.length) {
+            if (isRemoteUrl(post.thumbnailImage)) {
+                return post.thumbnailImage;
+            }
+            return urlFor(post.path + "/" + post.thumbnailImage);
+        }
+
+        // Define third images (cover image and first photo) as thumbnail image
+        if (theme.thumbnail_image && (post.autoThumbnailImage === true ||
+            (theme.auto_thumbnail_image === true && post.autoThumbnailImage !== false))) {
+            // use photos
+            if (post.photos && post.photos.length) {
+                if (isRemoteUrl(post.photos[0])) {
+                    return post.photos[0].match(rPhoto)[1];
+                }
+
+                return urlFor(post.path + "/" + post.photos[0].match(rPhoto)[1]);
+            }
+
+            // use cover image
+            if (post.coverImage && post.coverImage.length) {
+                if (isRemoteUrl(post.coverImage)) {
+                    return post.coverImage;
+                }
+
+                return urlFor(post.path + "/" +  post.coverImage);
+            }
+        }
+        return null;
+    }
+    /**
      * Generate thumbnail image url based on thumbnail image, cover image or photos
      * @param {Object} post
      * @returns {String|null}
@@ -45,12 +86,11 @@
     function genThumbnailImageUrl(post) {
       var rPhoto = /([\w:\-\/._#]+) *(["|'](.+)["|'])*/;
 
-      // use thumbnail image
+        // use thumbnail image
       if (theme.thumbnail_image && post.thumbnailImage && post.thumbnailImage.length) {
         if (isRemoteUrl(post.thumbnailImage)) {
           return post.thumbnailImage;
         }
-
         return urlFor(post.permalink + post.thumbnailImage);
       }
 
@@ -78,7 +118,7 @@
       return null;
     }
 
-    post.thumbnailImageUrl = genThumbnailImageUrl(post);
+    post.thumbnailImageUrl = getThumbnailImageUrl(post);
     return post;
   });
 })();

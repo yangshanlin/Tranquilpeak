@@ -25,10 +25,9 @@
             .archive-post-date {
                 color: map-get($colors, light);
             }
-            // Change style of the list by adding font-awesome icon
+            // Change styl of the list by adding font-awesome icon
             &::before {
-                font-family: 'Font Awesome 5 Free';
-                font-weight: 600;
+                font-family: 'FontAwesome';
                 content:     '\f0da';
                 font-size:   map-get($font-size, small);
             }

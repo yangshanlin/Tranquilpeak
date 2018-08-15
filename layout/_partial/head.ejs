@@ -1,114 +1,125 @@
 <%
-    var title = '';
-    var title_suffix = ' - ' + config.title;
-    var fb_admin_ids = [];
-    var keywords = '';
-    var photos = [];
-    var publisher = '';
+var title = '';
+var title_suffix = ' - ' + config.title;
+var fb_admin_ids = [];
+var keywords = '';
+var photos = [];
+var publisher = '';
 
-    /**
-     * Separate fb admin ids
-     */
-    (function() {
-        if (theme.fb_admin_ids) {
-            fb_admin_ids = String(theme.fb_admin_ids).split(',');
+
+var favicon = null;
+
+// Generate URL of cover image
+if (is_remote_url(theme.favicon)) {
+    favicon = theme.favicon;
+}
+else {
+    favicon = url_for(theme.image_dir + '/' + theme.favicon);
+}
+
+/**
+ * Separate fb admin ids
+ */
+(function () {
+    if (theme.fb_admin_ids) {
+        fb_admin_ids = String(theme.fb_admin_ids).split(',');
+    }
+})();
+
+/**
+ * Pick publisher G+ profile
+ */
+(function () {
+    if (theme.author.google_plus_business) {
+        publisher = theme.author.google_plus_business;
+    }
+    else if (theme.author.google_plus) {
+        publisher = theme.author.google_plus;
+    }
+})();
+
+/**
+ * Generate page title
+ */
+(function () {
+    if (is_home()) {
+        title += config.title;
+    }
+    else if (is_archive()) {
+        title += __('global.archives');
+
+        if (is_month()) {
+            title += ': ' + page.year + '/' + page.month;
         }
-    })();
-
-    /**
-     * Pick publisher G+ profile
-     */
-    (function() {
-        if (theme.author.google_plus_business) {
-            publisher = theme.author.google_plus_business;
+        else if (is_year()) {
+            title += ': ' + page.year;
         }
-        else if (theme.author.google_plus) {
-            publisher = theme.author.google_plus;
-        }
-    })();
 
-    /**
-     * Generate page title
-     */
-    (function() {
-        if (is_home()) {
-            title += config.title;
-        }
-        else if (is_archive()){
-            title += __('global.archives');
-
-            if (is_month()) {
-                title += ': ' + page.year + '/' + page.month;
-            }
-            else if (is_year()) {
-                title += ': ' + page.year;
-            }
-
-            title += title_suffix;
-        }
-        else if (is_tag()) {
-            if (page.tag) {
-                title += __('global.tag') + ': ' + page.tag;
-            }
-            else {
-                title += __('global.tags');
-            }
-
-            title += title_suffix;
-        }
-        else if (is_category()) {
-            if (page.category) {
-                title += __('global.category') + ': ' + page.category;
-            }
-            else {
-                title += __('global.categories');
-            }
-
-            title += title_suffix;
+        title += title_suffix;
+    }
+    else if (is_tag()) {
+        if (page.tag) {
+            title += __('global.tag') + ': ' + page.tag;
         }
         else {
-            title += page.title + title_suffix;
+            title += __('global.tags');
         }
-    })();
 
+        title += title_suffix;
+    }
+    else if (is_category()) {
+        if (page.category) {
+            title += __('global.category') + ': ' + page.category;
+        }
+        else {
+            title += __('global.categories');
+        }
+
+        title += title_suffix;
+    }
+    else {
+        title += page.title + title_suffix;
+    }
+})();
+
+/**
+ * Get global and page keywords
+ */
+(function () {
+    if (config.keywords) {
+        keywords += config.keywords;
+        keywords += ',';
+    }
+    if (page.keywords) {
+        keywords += page.keywords;
+    }
+})();
+
+/**
+ * Extract original url of page photos and store it
+ * to add them in open graph and swiftype meta tag
+ */
+(function () {
     /**
-     * Get global and page keywords
+     * Extract original url of a photo and store it
      */
-    (function() {
-        if (config.keywords) {
-            keywords += config.keywords;
-            keywords += ',';
-        }
-        if (page.keywords) {
-            keywords += page.keywords;
-        }
-    })();
+    function processImage(img) {
+        var rPhoto = /([\w:\-\/._#]+)(?:\s+([\w:\-\/._#]+))*(?:\s*["|'](.+)["|'])*/;
+        match = img.match(rPhoto);
+        photos.push(resolve_asset_url(page.path, match[1]));
+    }
 
-    /**
-     * Extract original url of page photos and store it
-     * to add them in open graph and swiftype meta tag
-     */
-    (function() {
-        /**
-         * Extract original url of a photo and store it
-         */
-        function processImage(img) {
-            var rPhoto = /([\w:\-\/._#]+)(?:\s+([\w:\-\/._#]+))*(?:\s*["|'](.+)["|'])*/;
-            match = img.match(rPhoto);
-            photos.push(resolve_asset_url(page.path, match[1]));
-        }
-
-        if (page.gallery && page.gallery.length) {
-            page.gallery.forEach(function(photo) {
-                processImage(photo)
-            });
-        }
-        else if (page.photos && page.photos.length) {
-            page.photos.forEach(function(photo) {
-                processImage(photo);
-            });
-        }
-    })();
+    if (page.gallery && page.gallery.length) {
+        page.gallery.forEach(function (photo) {
+            processImage(photo)
+        });
+    }
+    else if (page.photos && page.photos.length) {
+        page.photos.forEach(function (photo) {
+            processImage(photo);
+        });
+    }
+})();
 %>
 <head>
     <meta charset="UTF-8">
@@ -117,13 +128,13 @@
     <title><%= title %></title>
     <meta name="author" content="<%= config.author %>">
     <% if (keywords) { %>
-        <meta name="keywords" content="<%= keywords %>">
+    <meta name="keywords" content="<%= keywords %>">
     <% } %>
     <% if (theme.favicon) { %>
-        <link rel="icon" href="<%= resolve_asset_url(theme.image_dir, theme.favicon) %>">
+    <link rel="icon" href="<%= relative_url(theme.image_dir, theme.favicon) %>">
     <% } %>
     <% if ((config.feed) && (config.feed.path.length)) { %>
-        <link rel="alternate" type="application/atom+xml" title="RSS" href="<%- url_for(config.feed.path) %>">
+    <link rel="alternate" type="application/atom+xml" title="RSS" href="<%- url_for(config.feed.path) %>">
     <% } %>
     <%- json_ld() %>
     <%- open_graph({
@@ -132,38 +143,67 @@
         fb_app_id: theme.fb_app_id
     }) %>
     <% if (publisher) { %>
-        <link rel="publisher" href="https://plus.google.com/<%= publisher %>"/>
+    <link rel="publisher" href="https://plus.google.com/<%= publisher %>"/>
     <% } %>
     <% if (typeof fb_admin_ids !== 'undefined') { %>
-        <% fb_admin_ids.forEach(function(fb_admin_id) { %>
-            <meta property="fb:admins" content="<%= fb_admin_id %>" />
-        <% }) %>
+    <% fb_admin_ids.forEach(function(fb_admin_id) { %>
+    <meta property="fb:admins" content="<%= fb_admin_id %>"/>
+    <% }) %>
     <% } %>
     <% if (theme.gravatar_email) { %>
-        <meta property="og:image" content="<%- gravatar(theme.gravatar_email, 640) %>"/>
+    <meta property="og:image" content="<%- gravatar(theme.gravatar_email, 640) %>"/>
     <% } else if (theme.author.picture) { %>
-        <meta property="og:image" content="<%= resolve_asset_url(theme.image_dir, theme.author.picture) %>"/>
+    <meta property="og:image" content="<%= resolve_asset_url(theme.image_dir, theme.author.picture) %>"/>
     <% } %>
     <% if (page.thumbnailImage && page.thumbnailImage.length) { %>
-        <meta property="og:image" content="<%= resolve_asset_url(page.path, page.thumbnailImage) %>"/>
-        <meta class="swiftype" name="image" data-type="enum" content="<%= resolve_asset_url(page.path, page.thumbnailImage) %>" />
+    <meta property="og:image" content="<%= resolve_asset_url(page.path, page.thumbnailImage) %>"/>
+    <meta class="swiftype" name="image" data-type="enum"
+          content="<%= resolve_asset_url(page.path, page.thumbnailImage) %>"/>
     <% } %>
     <% if (page.coverImage && page.coverImage.length) { %>
-        <meta property="og:image" content="<%= resolve_asset_url(page.path, page.coverImage) %>"/>
-        <meta class="swiftype" name="image" data-type="enum" content="<%= resolve_asset_url(page.path, page.coverImage) %>" />
+    <meta property="og:image" content="<%= resolve_asset_url(page.path, page.coverImage) %>"/>
+    <meta class="swiftype" name="image" data-type="enum"
+          content="<%= resolve_asset_url(page.path, page.coverImage) %>"/>
     <% } %>
     <% if (photos && photos.length) { %>
-        <% photos.forEach(function(photo) { %>
-            <meta property="og:image" content="<%= photo %>" />
-            <meta class="swiftype" name="image" data-type="enum" content="<%= photo %>" />
-        <% }) %>
+    <% photos.forEach(function(photo) { %>
+    <meta property="og:image" content="<%= photo %>"/>
+    <meta class="swiftype" name="image" data-type="enum" content="<%= photo %>"/>
+    <% }) %>
     <% } %>
     <!--STYLES-->
-    <%- css('assets/css/all.css') %>
-    <%- css('assets/css/jquery.fancybox.css') %>
-    <%- css('assets/css/thumbs.css') %>
-    <%- css('assets/css/tranquilpeak.css') %>
+    <%- css('assets/css/style-qqn2g8ow1mqpmtbotoce9kw4vzpklxu0hifuujwugtaxpkrml7p6ao28iypg.min.css') %>
     <!--STYLES END-->
     <%- partial('google-analytics') %>
     <%- partial('baidu-analytics') %>
+    <% if (theme.daovoice) { %>
+    <script>(function (i, s, o, g, r, a, m) {
+            i["DaoVoiceObject"] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            a.charset = "utf-8";
+            m.parentNode.insertBefore(a, m)
+        })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0ba5a2ce.js", "daovoice")
+        daovoice('init', {
+            app_id: "<%=theme.daovoice_app_id %>"
+        });
+        daovoice('update');
+    </script>
+    <% } %>
+
+    <!--<script>-->
+        <!--(function(){-->
+            <!--if('{{ page.password }}'){-->
+                <!--if (prompt('请输入文章密码') !== '{{ page.password }}'){-->
+                    <!--alert('密码错误！');-->
+                    <!--history.back();-->
+                <!--}-->
+            <!--}-->
+        <!--})();-->
+    <!--</script>-->
+
 </head>

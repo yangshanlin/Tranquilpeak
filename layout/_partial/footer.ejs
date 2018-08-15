@@ -1,5 +1,45 @@
 <footer id="footer" class="main-content-wrap">
     <span class="copyrights">
-        Copyrights &copy; <%= date(new Date(), 'YYYY') + ' ' + config.author || config.title %>. All Rights Reserved.
+        License - <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.en">Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
+    </span>
+    <br>
+    <!--<div id="footer-img"></div>-->
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <div class="powered-by">
+        <i class="fa fa-user-md"></i>
+        <span id="busuanzi_container_site_uv">
+        Total <span id="busuanzi_value_site_uv"></span> visitors.
+        </span>
+
+        <!--<span id="busuanzi_container_site_pv">-->
+        <!--Total visits <span id="busuanzi_value_site_pv"></span> times.-->
+        <!--</span>-->
+
+        <% if (is_post()) { %>
+        <span id="busuanzi_container_page_pv">
+        Total reading <span id="busuanzi_value_page_pv"></span> times.
+        </span>
+        <% } %>
+        <span id="timeDate">0</span><span id="times">0</span>
+        <script>
+            var now = new Date();
+            function createtime() {
+                var grt= new Date("06/06/2016 06:06:00");//此处修改你的建站时间或者网站上线时间
+                now.setTime(now.getTime()+250);
+                days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+                hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+                if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+                mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+                seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+                snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+                document.getElementById("timeDate").innerHTML = "Blog age: "+dnum+" day ";
+                document.getElementById("times").innerHTML = hnum + " h " + mnum + " m " + snum + " s";
+            }
+            setInterval("createtime()",250);
+        </script>
+    </div>
+
+    <span class="copyrights">
+        Copyrights &copy; <%= date(new Date(), 'YYYY') + ' ' + config.copyright %>. All Rights Reserved.
     </span>
 </footer>

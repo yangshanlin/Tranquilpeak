@@ -16,10 +16,8 @@
                 <a href="<%- url_for('/#about') %>">
                     <img class="sidebar-profile-picture" src="<%= authorPicture %>" alt="<%= __('global.author_picture') %>"/>
                 </a>
-                <h4 class="sidebar-profile-name"><%= config.author %></h4>
-                <% if (__('author.bio')) { %>
-                    <h5 class="sidebar-profile-bio"><%- markdown(__('author.bio')) %></h5>
-                <% } %>
+                <span class="sidebar-profile-name"><%= config.author %></span>
+                <span class="sidebar-profile-motto"><%= theme.author.motto %></span>
             </div>
         <% } %>
         <% for (var i in theme.sidebar) { %>

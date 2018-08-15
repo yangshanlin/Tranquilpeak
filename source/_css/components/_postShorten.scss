@@ -19,6 +19,8 @@
         overflow:hidden;
     }
     .postShorten-header {
+      text-align: center;
+
         .postShorten-title {
             margin:     0;
             word-break: initial;
@@ -94,7 +96,7 @@
     .postShorten.postShorten--thumbnailimg-right {
         .postShorten-thumbnailimg {
             float:  right;
-            margin: 5px 0 30px 15px;
+            margin: 40px 0 30px 15px;
 
             img {
                 display:    block;
@@ -102,6 +104,7 @@
                 height:     $post-thumbnail-image-width;
                 object-fit: cover;
                 overflow:   hidden;
+                border-radius: 8px;
             }
         }
         .postShorten-wrap {
@@ -119,7 +122,8 @@
                 width:      $post-thumbnail-image-width;
                 height:     $post-thumbnail-image-width;
                 object-fit: cover;
-                overflow:   hidden;
+                overflow:   hithumbnailImagedden;
+                border-rthumbnailImageadius: 8px;
             }
         }
         .postShorten-wrap {

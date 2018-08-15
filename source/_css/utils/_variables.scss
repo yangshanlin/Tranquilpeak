@@ -86,7 +86,7 @@ $screen-min: (
      // you have to change value of `mediumScreenWidth` too in `source/_js/sidebar.js`
     'md-min': 768px,
     'lg-min': 1024px,
-    'xlg-min': 1280px
+    'xlg-min': 1560px
 );
 $screen-max: (
     'xs-max': map-get($screen-min, sm-min) - 1,
@@ -147,8 +147,9 @@ $header:(
 // Sidebar
 $sidebar: (
     'md-screen-width':  75px,
-    'lg-screen-width':  250px,
-    'xlg-screen-width': 500px,
+    'lg-screen-width':  350px,
+    'xlg-screen-padding': 100px,
+    'xlg-screen-width': 550px,
     'background':       rgba(17, 26, 35, 0),
     'color':            #ebebeb
 );
@@ -216,7 +217,7 @@ $image-gallery-photos-margin: 2px;
 
 // Main content
 $main-content: (
-    'max-width':          750px,
+    'max-width':          850px,
     'padding-right-left': 20px,
 );
 
